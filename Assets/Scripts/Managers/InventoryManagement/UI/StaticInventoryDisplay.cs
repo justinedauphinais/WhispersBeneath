@@ -81,38 +81,31 @@ public class StaticInventoryDisplay : InventoryDisplay
     /// <summary>
     /// 
     /// </summary>
-    public void Update()
+    public void ScrollUp()
     {
-        if (gameObject.activeInHierarchy)
-        {
-            if (Mouse.current.scroll.up.value > 0)
-            {
-                int index = selectedIndex + 1;
+        int index = selectedIndex + 1;
 
-                if (index == 10) index = 0;
+        if (index == 10) index = 0;
 
-                SetIndex(index);
-            }
-            else if (Mouse.current.scroll.down.value > 0)
-            {
-                int index = selectedIndex - 1;
-
-                if (index == -1) index = 9;
-
-                SetIndex(index);
-            }
-
-            if (Keyboard.current.eKey.wasPressedThisFrame)
-            {
-                UseItem();
-            }
-        }
+        SetIndex(index);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private void UseItem()
+    public void ScrollDown()
+    {
+        int index = selectedIndex - 1;
+
+        if (index == -1) index = 9;
+
+        SetIndex(index);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UseItem()
     {
         if (slots[selectedIndex].AssignedInventorySlot.ItemData != null)
         {

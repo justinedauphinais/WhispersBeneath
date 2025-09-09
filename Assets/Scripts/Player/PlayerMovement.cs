@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// This script provides jumping and movement for the main character
@@ -37,12 +38,8 @@ public class Player : MonoBehaviour
 
         // Set the raycast to be slightly beneath the player's feet
         raycastDistance = ((GetComponent<CapsuleCollider>().height * transform.localScale.y) / 2) + 0.2f;
-
-        // Hides the mouse
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
     }
-
+ 
     /// <summary>
     /// Movement detection & jumping logic
     /// </summary>

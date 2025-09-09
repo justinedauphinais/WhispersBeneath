@@ -12,7 +12,7 @@ public class TimeUI : MonoBehaviour
 
     private Sprite[] sprites;
 
-    private void Start()
+    private void Awake()
     {
         sprites = Resources.LoadAll<Sprite>("Time_Pictograms");
     }

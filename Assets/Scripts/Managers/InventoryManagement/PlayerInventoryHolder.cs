@@ -33,7 +33,7 @@ public class PlayerInventoryHolder : InventoryHolder
     /// <summary>
     /// 
     /// </summary>
-    private void Update()
+    public void RequestInventory()
     {
         if (Keyboard.current.bKey.wasPressedThisFrame) OnPlayerInventoryDisplayRequested?.Invoke(primaryInventorySystem, offset);
     }

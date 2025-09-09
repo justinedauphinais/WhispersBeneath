@@ -54,7 +54,7 @@ public class StateManager : MonoBehaviour
                 player.SetActive(true);
                 playerCamera.enabled = true;
                 buildingCamera.enabled = false;
-                return;
+                break;
 
             case GameState.Building:
                 placementSystem.SetActive(true);
@@ -62,8 +62,18 @@ public class StateManager : MonoBehaviour
                 buildingCamera.enabled = true;
                 playerCamera.enabled = false;
                 player.SetActive(false);
-                return;
+                break;
+
+            case GameState.Inventory:
+                placementSystem.SetActive(false);
+                state = GameState.Inventory;
+                player.SetActive(true);
+                playerCamera.enabled = true;
+                buildingCamera.enabled = false;
+                break;
         }
+
+        inputManager.ChangeState(newState);
     }
 
     /// <summary>
@@ -101,5 +111,10 @@ public class StateManager : MonoBehaviour
     {
         if (state == GameState.Building) ActivateGameplayMode();
         else ActivateBuildingMode(1);
+    }
+
+    public void ActivateInventoryMode()
+    {
+        SetState(GameState.Inventory);
     }
 }

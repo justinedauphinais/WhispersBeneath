@@ -16,7 +16,9 @@ public class PlacementSystem : MonoBehaviour
 
     [SerializeField] private GridData floorData, furnitureData;
 
-    //private MeshRenderer previewRenderer;
+    [SerializeField] private GameObject previewRenderer;
+
+    [SerializeField] private Material[] materials;
 
     private List<GameObject> placedGameObjects = new List<GameObject>();
 
@@ -31,7 +33,6 @@ public class PlacementSystem : MonoBehaviour
     {
         floorData = new GridData();
         furnitureData = new GridData();
-        //previewRenderer = cellIndicator.GetComponent<MeshRenderer>();
         gridVisualization = grid.GetComponent<MeshRenderer>();
 
         StopPlacement();
@@ -45,6 +46,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         selectedObject = (InventoryItemData_Placeable)database.GetItem(ID);
+        previewRenderer.GetComponent<MeshFilter>().mesh = selectedObject.ItemPrefab.GetComponent<MeshFilter>().sharedMesh;
 
         if (selectedObject == null)
         {
@@ -128,8 +130,6 @@ public class PlacementSystem : MonoBehaviour
     {
         if (!IsActive) return;
 
-        if (Input.GetKeyDown(KeyCode.Q)) StartPlacement(1);
-
         if (!selectedObject) return;
 
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
@@ -138,7 +138,7 @@ public class PlacementSystem : MonoBehaviour
 
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        //previewRenderer.material.color = CheckPlacementValidity(gridPosition, selectedObject) ? Color.white : Color.red;
+        previewRenderer.GetComponent<MeshRenderer>().material = CheckPlacementValidity(gridPosition, selectedObject) ? materials[0] : materials[1];
 
         cellIndicator.transform.position = new Vector3(grid.GetCellCenterWorld(gridPosition).x, cellIndicator.transform.position.y, grid.GetCellCenterWorld(gridPosition).z);
     }

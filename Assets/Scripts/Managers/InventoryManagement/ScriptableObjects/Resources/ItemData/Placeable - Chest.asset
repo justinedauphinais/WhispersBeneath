@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ec858ede9ad93946943b1eff7c2bc47, type: 3}
-  m_Name: Placeable - Tombstone
+  m_Name: Placeable - Chest
   m_EditorClassIdentifier: Assembly-CSharp::InventoryItemData_Placeable
-  ID: 1
-  DisplayName: Tombstone
-  Description: Tomb
-  Icon: {fileID: 21300000, guid: 479d9c136e9fa934989566e706fc1235, type: 3}
+  ID: 2
+  DisplayName: Chest
+  Description: Chest
+  Icon: {fileID: 0}
   MaxStackSize: 1
   GoldValue: 150
-  ItemPrefab: {fileID: 1451292190191655674, guid: 30dfe21abb5e38d4ebbeeb3996eea5f4, type: 3}
-  Size: {x: 1, y: 1}
+  ItemPrefab: {fileID: 8150978545768022160, guid: 54686286c87262e4ab5904dcdd8e7426, type: 3}
+  Size: {x: 2, y: 2}
