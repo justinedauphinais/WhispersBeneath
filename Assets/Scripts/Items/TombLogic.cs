@@ -8,7 +8,6 @@ public class TombLogic : MonoBehaviour, IInteractable
     [SerializeField] private Mesh normalMesh;
     [SerializeField] private Mesh unkeptMesh;
     [SerializeField] private Canvas canvas;
-    [SerializeField] private Transform playerCamera;
 
     private MeshFilter meshFilter;
 
@@ -39,7 +38,7 @@ public class TombLogic : MonoBehaviour, IInteractable
                 meshFilter.mesh = unkeptMesh;
         }
 
-        canvas.transform.LookAt(transform.position + playerCamera.forward);
+        canvas.transform.LookAt(transform.position + Camera.main.transform.forward);
     }
 
     public void OnTriggerEnter(Collider other)

@@ -25,7 +25,8 @@ public class InventoryItemData_Placeable : InventoryItemData
     {
         base.UseItem();
 
-        Debug.Log($"Trigger placing down.");
+        StateManager stateManager = GameObject.FindGameObjectWithTag("StateManager").GetComponent<StateManager>();
+        stateManager.ActivateBuildingMode(this);
 
         return false;
     }

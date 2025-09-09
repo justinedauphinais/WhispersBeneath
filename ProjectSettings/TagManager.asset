@@ -8,6 +8,8 @@ TagManager:
   - Spirit
   - Grave
   - Lantern
+  - StateManager
+  - SecondCamera
   layers:
   - Default
   - TransparentFX

@@ -39,8 +39,8 @@ public class Player : MonoBehaviour
         raycastDistance = ((GetComponent<CapsuleCollider>().height * transform.localScale.y) / 2) + 0.2f;
 
         // Hides the mouse
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     /// <summary>
