@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
         transform.Rotate(0, (Input.GetAxis("Mouse X") * mouseSensitivity), 0);
 
         verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -20f, 20f);
+        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
 
         mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }

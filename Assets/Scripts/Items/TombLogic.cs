@@ -61,6 +61,7 @@ public class TombLogic : MonoBehaviour, IInteractable
     {
         interactSuccessfully = true;
         Maintenance = 100f;
+        meshFilter.mesh = normalMesh;
     }
 
     /// <summary>
