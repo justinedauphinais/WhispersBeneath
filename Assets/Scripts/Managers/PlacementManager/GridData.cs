@@ -28,6 +28,8 @@ public class GridData
 
         foreach (Vector3Int positionToOccupy in positionsToOccupy)
         {
+            Debug.Log(positionToOccupy);
+
             if (placedObjects.ContainsKey(positionToOccupy))
                 throw new Exception($"Dictionary already contains this cell position {positionToOccupy}.");
 

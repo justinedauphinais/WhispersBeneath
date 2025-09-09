@@ -50,6 +50,8 @@ public class TombLogic : MonoBehaviour, IInteractable
                 meshFilter.mesh = unkeptMesh;
         }
 
+        if (!Camera.main) return;
+
         canvas.transform.LookAt(transform.position + Camera.main.transform.forward);
     }
 
