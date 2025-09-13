@@ -18,6 +18,8 @@ public class TimeManager : MonoBehaviour
 
     private float timer;
 
+    private bool isPaused;
+
     private float rotationSpeed;
     public float dayLengthMinutes;
 
@@ -34,9 +36,20 @@ public class TimeManager : MonoBehaviour
         directionalLight.transform.SetPositionAndRotation(directionalLight.position, new Quaternion((float)(15 * Hour - 75 + 0.25 * Minute), 0f, 0f, 0f));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pause"></param>
+    public void PauseTime(bool pause)
+    {
+        isPaused = pause;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (isPaused) return;
+
         directionalLight.Rotate(new Vector3(1, 0, 0) * rotationSpeed * Time.deltaTime);
 
         timer -= Time.deltaTime;
@@ -63,15 +76,15 @@ public class TimeManager : MonoBehaviour
                 {
                     if (!IsNight) OnNightTriggererd?.Invoke();
 
-                    UnityEngine.RenderSettings.ambientIntensity = 0f;
-                    UnityEngine.RenderSettings.reflectionIntensity = 0.25f;
+                    //UnityEngine.RenderSettings.ambientIntensity = 0f;
+                    //UnityEngine.RenderSettings.reflectionIntensity = 0.25f;
 
                     IsNight = true;
                 }
                 else if (Hour == 5 && IsNight)
                 {
-                    UnityEngine.RenderSettings.ambientIntensity = 1f;
-                    UnityEngine.RenderSettings.reflectionIntensity = 1f;
+                    //UnityEngine.RenderSettings.ambientIntensity = 1f;
+                    //UnityEngine.RenderSettings.reflectionIntensity = 1f;
                 }
                 else
                     IsNight = false;

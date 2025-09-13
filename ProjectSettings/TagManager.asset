@@ -10,6 +10,7 @@ TagManager:
   - Lantern
   - StateManager
   - SecondCamera
+  - ContextPopup
   layers:
   - Default
   - TransparentFX

@@ -19,4 +19,6 @@ MonoBehaviour:
   MaxStackSize: 1
   GoldValue: 150
   ItemPrefab: {fileID: 8150978545768022160, guid: 54686286c87262e4ab5904dcdd8e7426, type: 3}
+  ItemDataType: 2
   Size: {x: 2, y: 2}
+  placeableType: 0

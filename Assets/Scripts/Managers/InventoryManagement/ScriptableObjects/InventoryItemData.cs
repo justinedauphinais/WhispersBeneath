@@ -17,6 +17,8 @@ public class InventoryItemData : ScriptableObject
 
     public GameObject ItemPrefab;                   /// GameObject to create when placing down / putting down
 
+    public InventoryItemDataType ItemDataType;
+
     /// <summary>
     /// Use the item
     /// </summary>
@@ -26,4 +28,11 @@ public class InventoryItemData : ScriptableObject
 
         return true;
     }
+}
+
+public enum InventoryItemDataType
+{
+    Default, 
+    Decoration,
+    Placeable,
 }

@@ -7,5 +7,7 @@ public interface IInteractable
 
     public void Interact(Interactor interactor, out bool interactSuccessfully);
 
+    public void ContextWheel(Interactor interactor, out bool interactSuccessfully);
+
     public void EndInteraction();
 }

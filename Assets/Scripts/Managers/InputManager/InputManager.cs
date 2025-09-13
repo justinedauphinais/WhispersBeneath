@@ -12,13 +12,22 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private PlayerInventoryHolder playerInventoryHolder;
     [SerializeField] private StaticInventoryDisplay hotbar;
+    [SerializeField] private PlacementSystem placementSystem;
+    [SerializeField] private Interactor player;
+    [SerializeField] private ItemDatabase itemDatabase;
 
     private Vector3 lastPosition;
 
-    public event Action OnClicked, OnExit;
+    /// Building system variables
+    public event Action OnClicked, OnExit, OnUpdate, OnRotate;
 
     public LayerMask PlacementMask => placementMask;
     public Vector3 LastPosition => lastPosition;
+
+    [SerializeField] public int DebugBuildItem = 4;
+
+    private float pressStartTime;
+    [SerializeField] private float holdThreshold = 0.35f;
 
     /// <summary>
     /// 
@@ -59,15 +68,48 @@ public class InputManager : MonoBehaviour
                     hotbar.SetIndex(7);
                 else if (Keyboard.current.digit9Key.wasPressedThisFrame || Keyboard.current.numpad9Key.wasPressedThisFrame)
                     hotbar.SetIndex(8);
-                else if (Keyboard.current.digit0Key.wasPressedThisFrame || Keyboard.current.numpad0Key.wasPressedThisFrame)
+                else if (Keyboard.current.digit0Key.wasPressedThisFrame || Keyboard.current.numpad0Key.wasPressedThisFrame)
                     hotbar.SetIndex(9);
 
                 if (Keyboard.current.tKey.wasPressedThisFrame)
-                    stateManager.ActivateBuildingMode(2);
+                    stateManager.ActivateBuildingMode(DebugBuildItem);
+
+                if (Keyboard.current.eKey.wasPressedThisFrame)
+                {
+                    pressStartTime = Time.time;
+                }
+
+                if (Keyboard.current.eKey.wasReleasedThisFrame)
+                {
+                    float heldTime = Time.time - pressStartTime;
+                    pressStartTime = 0;
+
+                    if (heldTime < holdThreshold)
+                        player.Interact();
+                    else
+                    {
+                        if (player.ContextWheel())
+                            stateManager.ActivateDialogueMode();
+                    }
+                }
+
+                if (Keyboard.current.pKey.wasPressedThisFrame)
+                {
+                    InventoryItemData item = itemDatabase.GetItem(5);
+                    player.gameObject.GetComponent<PlayerInventoryHolder>().AddToInventory(item, 1);
+                }
+
+                if (Keyboard.current.oKey.wasPressedThisFrame)
+                {
+                    InventoryItemData item = itemDatabase.GetItem(6);
+                    player.gameObject.GetComponent<PlayerInventoryHolder>().AddToInventory(item, 1);
+                }
 
                 return;
 
             case StateManager.GameState.Building:
+                OnUpdate?.Invoke();
+
                 if (Input.GetMouseButtonDown(0))
                     OnClicked?.Invoke();
                 else if (Input.GetKeyDown(KeyCode.Escape))
@@ -75,7 +117,9 @@ public class InputManager : MonoBehaviour
                     OnExit?.Invoke();
                     stateManager.ActivateGameplayMode();
                 }
-
+                else if (Input.GetKeyDown(KeyCode.R))
+                    OnRotate?.Invoke();
+                
                 return;
 
             case StateManager.GameState.Inventory:

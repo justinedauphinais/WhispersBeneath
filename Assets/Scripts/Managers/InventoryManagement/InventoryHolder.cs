@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public abstract class InventoryHolder : MonoBehaviour
 {
     [Header("Inventory Information")]
-    [SerializeField] private int primaryInventorySize;
+    [SerializeField] protected int primaryInventorySize;
     [SerializeField] protected InventorySystem primaryInventorySystem;
     [SerializeField] protected int offset = 10;
 

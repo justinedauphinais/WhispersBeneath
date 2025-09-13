@@ -14,11 +14,15 @@ public class StateManager : MonoBehaviour
     [Header("Managers")]
     [SerializeField] private InputManager inputManager;
     [SerializeField] private PlacementSystem placementSystem;
+    [SerializeField] private TimeManager timeManager;
     [SerializeField] private GameObject player;
 
     [Header("Cameras")]
     [SerializeField] private Camera buildingCamera;
     [SerializeField] private Camera playerCamera;
+
+    // TEMPORARY
+    [SerializeField] private ContextPopup contextPopup;
 
     private GameState state;
 
@@ -54,6 +58,7 @@ public class StateManager : MonoBehaviour
                 player.SetActive(true);
                 playerCamera.enabled = true;
                 buildingCamera.enabled = false;
+                timeManager.PauseTime(false);
                 break;
 
             case GameState.Building:
@@ -62,6 +67,7 @@ public class StateManager : MonoBehaviour
                 buildingCamera.enabled = true;
                 playerCamera.enabled = false;
                 player.SetActive(false);
+                timeManager.PauseTime(true);
                 break;
 
             case GameState.Inventory:
@@ -70,10 +76,39 @@ public class StateManager : MonoBehaviour
                 player.SetActive(true);
                 playerCamera.enabled = true;
                 buildingCamera.enabled = false;
+                timeManager.PauseTime(true);
+                break;
+
+            case GameState.Dialogue:
+                placementSystem.SetActive(false);
+                state = GameState.Dialogue;
+                player.SetActive(true);
+                playerCamera.enabled = true;
+                buildingCamera.enabled = false;
+                timeManager.PauseTime(true);
                 break;
         }
 
         inputManager.ChangeState(newState);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public ContextPopup ShowContext(string prompt, string[] choices)
+    {
+        contextPopup.gameObject.SetActive(true);
+        contextPopup.CreateContext(prompt, choices);
+        SetState(GameState.Dialogue);
+        return contextPopup;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void ActivateDialogueMode()
+    {
+        SetState(GameState.Dialogue);
     }
 
     /// <summary>
@@ -113,6 +148,9 @@ public class StateManager : MonoBehaviour
         else ActivateBuildingMode(1);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void ActivateInventoryMode()
     {
         SetState(GameState.Inventory);

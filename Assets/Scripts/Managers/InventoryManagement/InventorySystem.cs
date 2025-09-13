@@ -17,17 +17,21 @@ public class InventorySystem
     public List<InventorySlot> InventorySlots => this.inventorySlots;
     public int InventorySize => inventorySlots.Count;
 
+    public InventorySlotType type = InventorySlotType.Default;
+
     /// <summary>
     /// Constructor that sets the amount of slots.
     /// </summary>
     /// <param name="size">Amount of slots</param>
-    public InventorySystem(int size)
+    public InventorySystem(int size, bool addEvents = false, InventorySlotType type = InventorySlotType.Default)
     {
         this.inventorySlots = new List<InventorySlot>(size);
 
         for (int i = 0; i < size; i++)
         {
-            this.inventorySlots.Add(new InventorySlot());
+            this.inventorySlots.Add(new InventorySlot(type));
+            
+            if (addEvents) this.inventorySlots[i].OnInventorySlotChanged += OnInventorySlotChanged;
         }
     }
 
@@ -39,6 +43,8 @@ public class InventorySystem
     /// <returns></returns>
     public bool AddToInventory(InventoryItemData itemToAdd, int amount)
     {
+        if (!CorrectType(itemToAdd)) return false;
+
         if (ContainsItem(itemToAdd, out List<InventorySlot> invSlots)) // Check whether item exists in inventory
         {
             foreach (InventorySlot slot in invSlots)
@@ -65,6 +71,26 @@ public class InventorySystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="itemToAdd"></param>
+    /// <returns></returns>
+    public bool CorrectType(InventoryItemData itemToAdd)
+    {
+        if (type == InventorySlotType.Default)
+            return true;
+        else if (type == InventorySlotType.Decoration)
+        {
+            if (itemToAdd.ItemDataType == InventoryItemDataType.Decoration)
+                return true;
+            else
+                return false;
+        }
+
+        return true;
     }
 
     /// <summary>

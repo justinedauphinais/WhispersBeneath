@@ -57,4 +57,14 @@ public class FurnitureInventory : InventoryHolder, IInteractable
     {
 
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="interactor"></param>
+    /// <param name="interactSuccessfully"></param>
+    public void ContextWheel(Interactor interactor, out bool interactSuccessfully)
+    {
+        interactSuccessfully = false;
+    }
 }

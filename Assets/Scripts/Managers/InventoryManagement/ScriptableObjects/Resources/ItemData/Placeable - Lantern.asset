@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec858ede9ad93946943b1eff7c2bc47, type: 3}
+  m_Name: Placeable - Lantern
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemData_Placeable
+  ID: 3
+  DisplayName: Lantern
+  Description: Lantern
+  Icon: {fileID: 0}
+  MaxStackSize: 1
+  GoldValue: 100
+  ItemPrefab: {fileID: 6774946503133775873, guid: a0357e9253421a8489ef50d8165cd6f2, type: 3}
+  ItemDataType: 2
+  Size: {x: 1, y: 1}
+  placeableType: 0

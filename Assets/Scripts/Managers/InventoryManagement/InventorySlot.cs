@@ -1,5 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
+
+public enum InventorySlotType
+{
+    Default,
+    Decoration
+}
 
 /// <summary>
 /// Backend inventory slot that holds the amount of the data (stack size)
@@ -8,21 +15,27 @@ using UnityEngine;
 public class InventorySlot : ISerializationCallbackReceiver
 {
     [Header("Inventory Item Information")]
-    [SerializeField] private int itemID = -1;
-    [SerializeField] private int stackSize;                 // Current stack size - how many of the data do we have?
+    [SerializeField] protected int itemID = -1;
+    [SerializeField] protected int stackSize;                 // Current stack size - how many of the data do we have?
 
-    [NonSerialized] private InventoryItemData itemData;     // Reference to the data
+    [NonSerialized] protected InventoryItemData itemData;     // Reference to the data
 
     public InventoryItemData ItemData => this.itemData;
 
     public int StackSize => this.stackSize;
 
+    public UnityAction<InventorySlot> OnInventorySlotChanged;
+
+    public bool InInventory = true;
+    public InventorySlotType inventorySlotType = InventorySlotType.Default;
+
     /// <summary>
     /// Default constructor to make an empty inventory slot.
     /// </summary>
-    public InventorySlot()
+    public InventorySlot(InventorySlotType type = InventorySlotType.Default)
     {
         ClearSlot();
+        inventorySlotType = type;
     }
 
     /// <summary>
@@ -30,11 +43,27 @@ public class InventorySlot : ISerializationCallbackReceiver
     /// </summary>
     /// <param name="source">Data to copy</param>
     /// <param name="amount">How many of the data do we have?</param>
-    public InventorySlot(InventoryItemData source, int amount)
+    public InventorySlot(InventoryItemData source, int amount, InventorySlotType type = InventorySlotType.Default)
     {
         itemData = source;
         itemID = itemData.ID;
         stackSize = amount;
+        inventorySlotType = type;
+    }
+
+    /// <summary>
+    /// Constructor to make an occupied inventory slot.
+    /// </summary>
+    /// <param name="source">Data to copy</param>
+    /// <param name="amount">How many of the data do we have?</param>
+    public InventorySlot(InventoryItemData source, int amount, GraveDecorationManagement eventReceiver, InventorySlotType type = InventorySlotType.Default)
+    {
+        itemData = source;
+        itemID = itemData.ID;
+        stackSize = amount;
+        inventorySlotType = type;
+        
+        if (eventReceiver) OnInventorySlotChanged += eventReceiver.InventorySlotChange;
     }
 
     /// <summary>
@@ -45,6 +74,7 @@ public class InventorySlot : ISerializationCallbackReceiver
         itemData = null;
         itemID = -1;
         stackSize = -1;
+        OnInventorySlotChanged?.Invoke(this);
     }
 
     /// <summary>
@@ -76,6 +106,26 @@ public class InventorySlot : ISerializationCallbackReceiver
         itemData = data;
         itemID = itemData.ID;
         stackSize = amount;
+        OnInventorySlotChanged?.Invoke(this);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public bool CorrectType(InventoryItemData data)
+    {
+        if (inventorySlotType == InventorySlotType.Default)
+            return true;
+        else if (inventorySlotType == InventorySlotType.Decoration)
+        {
+            if (data.ItemDataType == InventoryItemDataType.Decoration)
+                return true;
+            else return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -85,11 +135,25 @@ public class InventorySlot : ISerializationCallbackReceiver
     /// <param name="amountToAdd">Amount to add</param>
     /// <param name="amountRemaining">Amount remaining from the amount to add</param>
     /// <returns></returns>
-    public bool RoomLeftInStack(int amountToAdd, out int amountRemaining)
+    public virtual bool RoomLeftInStack(int amountToAdd, out int amountRemaining, InventoryItemData item = null)
     {
-        amountRemaining = ItemData.MaxStackSize - stackSize;
+        amountRemaining = 0;
 
-        return EnoughRoomLeftInStack(amountToAdd);
+        if (inventorySlotType == InventorySlotType.Default)
+            amountRemaining = ItemData.MaxStackSize - stackSize;
+        else if (inventorySlotType == InventorySlotType.Decoration)
+        {
+            if (itemData == null)
+            {
+                amountRemaining = ((InventoryItem_Decoration)item).MaxStackSizeOnDecorationSlot;
+            }
+            else
+            {
+                amountRemaining = ((InventoryItem_Decoration)ItemData).MaxStackSizeOnDecorationSlot - stackSize;
+            }
+        }
+        
+        return EnoughRoomLeftInStack(amountToAdd, (InventoryItem_Decoration)ItemData);
     }
 
     /// <summary>
@@ -97,9 +161,27 @@ public class InventorySlot : ISerializationCallbackReceiver
     /// </summary>
     /// <param name="amountToAdd">Amount to add</param>
     /// <returns></returns>
-    public bool EnoughRoomLeftInStack(int amountToAdd)
+    public virtual bool EnoughRoomLeftInStack(int amountToAdd, InventoryItemData item = null)
     {
-        if (itemData == null || itemData != null && stackSize + amountToAdd <= itemData.MaxStackSize) return true;
+        if (inventorySlotType == InventorySlotType.Default)
+            if (itemData == null || itemData != null && stackSize + amountToAdd <= itemData.MaxStackSize) return true;
+            else return false;
+        else if (inventorySlotType == InventorySlotType.Decoration)
+            if (itemData == null)
+            {
+                if (item == null)
+                    return true;
+                else
+                {
+                    if (stackSize + amountToAdd <= ((InventoryItem_Decoration)item).MaxStackSizeOnDecorationSlot)
+                        return true;
+                    else 
+                        return false;
+                }
+            }
+            else if (stackSize + amountToAdd <= ((InventoryItem_Decoration)ItemData).MaxStackSizeOnDecorationSlot) 
+                return true;
+            else return false;
         else return false;
     }
 
@@ -110,6 +192,7 @@ public class InventorySlot : ISerializationCallbackReceiver
     public void AddToStack(int amount)
     {
         stackSize += amount;
+        OnInventorySlotChanged?.Invoke(this);
     }
 
     /// <summary>
@@ -119,6 +202,7 @@ public class InventorySlot : ISerializationCallbackReceiver
     public void RemoveFromStack(int amount)
     {
         stackSize -= amount;
+        OnInventorySlotChanged?.Invoke(this);
     }
 
     /// <summary>
@@ -139,11 +223,11 @@ public class InventorySlot : ISerializationCallbackReceiver
 
         // Get half the stack.
         int halfStack = Mathf.RoundToInt(stackSize / 2);
-        Debug.Log(halfStack.ToString());
         RemoveFromStack(halfStack);
 
         // Creates a new copy of this slot with half the stack size. 
         splitStack = new InventorySlot(itemData, halfStack);
+        OnInventorySlotChanged?.Invoke(this);
         return true;
     }
 

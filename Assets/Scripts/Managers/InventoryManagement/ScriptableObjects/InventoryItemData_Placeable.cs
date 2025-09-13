@@ -6,6 +6,9 @@ public class InventoryItemData_Placeable : InventoryItemData
     [SerializeField]
     public Vector2Int Size = Vector2Int.zero;       /// Size of the object on the grid
 
+    [SerializeField]
+    public PlaceableType placeableType;
+
     /// <summary>
     /// If the object is placeable - Calculated by if it has a size.
     /// If it is, when used, we place it down.
@@ -30,4 +33,11 @@ public class InventoryItemData_Placeable : InventoryItemData
 
         return false;
     }
+}
+
+public enum PlaceableType
+{
+    Normal,
+    ConnectedTile,
+    Building
 }
