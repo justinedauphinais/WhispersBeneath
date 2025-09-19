@@ -12,18 +12,8 @@ public enum InventorySlotType
 /// Backend inventory slot that holds the amount of the data (stack size)
 /// </summary>
 [System.Serializable]
-public class InventorySlot : ISerializationCallbackReceiver
+public class InventorySlot : ItemSlot
 {
-    [Header("Inventory Item Information")]
-    [SerializeField] protected int itemID = -1;
-    [SerializeField] protected int stackSize;                 // Current stack size - how many of the data do we have?
-
-    [NonSerialized] protected InventoryItemData itemData;     // Reference to the data
-
-    public InventoryItemData ItemData => this.itemData;
-
-    public int StackSize => this.stackSize;
-
     public UnityAction<InventorySlot> OnInventorySlotChanged;
 
     public bool InInventory = true;
@@ -69,31 +59,10 @@ public class InventorySlot : ISerializationCallbackReceiver
     /// <summary>
     /// Clears the slot 
     /// </summary>
-    public void ClearSlot()
+    public override void ClearSlot()
     {
-        itemData = null;
-        itemID = -1;
-        stackSize = -1;
+        base.ClearSlot();
         OnInventorySlotChanged?.Invoke(this);
-    }
-
-    /// <summary>
-    /// Assigns an item to the slot.
-    /// </summary>
-    /// <param name="invSlot">Item</param>
-    public void AssignItem(InventorySlot invSlot)
-    {
-        if (itemData == invSlot.ItemData)   // Does the slot contain the same item? Add 
-        {
-            AddToStack(invSlot.StackSize);
-        }
-        else                                // Overwrite slot with the inventory slot that we're passing in.
-        {
-            itemData = invSlot.itemData;
-            itemID = itemData.ID;
-            stackSize = 0;
-            AddToStack(invSlot.stackSize);
-        }
     }
 
     /// <summary>
@@ -189,9 +158,9 @@ public class InventorySlot : ISerializationCallbackReceiver
     /// Add to stack.
     /// </summary>
     /// <param name="amount">Amount to add</param>
-    public void AddToStack(int amount)
+    public override void AddToStack(int amount)
     {
-        stackSize += amount;
+        base.AddToStack(amount);
         OnInventorySlotChanged?.Invoke(this);
     }
 
@@ -229,24 +198,5 @@ public class InventorySlot : ISerializationCallbackReceiver
         splitStack = new InventorySlot(itemData, halfStack);
         OnInventorySlotChanged?.Invoke(this);
         return true;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void OnBeforeSerialize()
-    {
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void OnAfterDeserialize()
-    {
-        if (itemID == -1) return;
-
-        var db = Resources.Load<ItemDatabase>("Database");
-        itemData = db.GetItem(itemID);
     }
 }

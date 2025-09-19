@@ -17,7 +17,10 @@ MonoBehaviour:
   Description: Tomb
   Icon: {fileID: 21300000, guid: 479d9c136e9fa934989566e706fc1235, type: 3}
   MaxStackSize: 1
-  GoldValue: 150
+  GoldValue:
+    bronzeAmount: 0
+    silverAmount: 0
+    goldAmount: 1
   ItemPrefab: {fileID: 1451292190191655674, guid: 30dfe21abb5e38d4ebbeeb3996eea5f4, type: 3}
   ItemDataType: 2
   Size: {x: 1, y: 1}

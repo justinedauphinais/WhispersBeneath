@@ -10,6 +10,7 @@ public class InventorySlot_UI : MonoBehaviour
 {
     [Header("Image & Count")]
     [SerializeField] protected Image itemSprite;
+    [SerializeField] protected Image holderSprite;
     [SerializeField] protected TextMeshProUGUI itemCount;
 
     [Header("Inventory Slot Information")]
@@ -110,6 +111,6 @@ public class InventorySlot_UI : MonoBehaviour
     /// <param name="image"></param>
     public void SetSprite(Sprite sprite)
     {
-        this.GetComponent<Image>().sprite = sprite;
+        holderSprite.sprite = sprite;
     }
 }

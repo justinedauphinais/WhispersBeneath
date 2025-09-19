@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d89a6724e975041bc86628271ed679, type: 3}
+  m_Name: Char_SorrowCrow
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDialogue
+  level1Idle:
+  - {fileID: 11400000, guid: 95d331b61201cdd4180a49e3584deaf1, type: 2}
+  - {fileID: 11400000, guid: 866f4500f0a97ad49a20d4fa8c909e6e, type: 2}
+  level2Idle:
+  - {fileID: 11400000, guid: b3f488af83dfb5543a70e3e463e78473, type: 2}
+  - {fileID: 11400000, guid: 96391975f43f6ad40b9462f4fb3854b9, type: 2}
+  level3Idle: []
+  level4Idle: []
+  level5Idle: []
+  level6Idle: []
+  level7Idle: []
+  level8Idle: []
+  level9Idle: []
+  level10Idle: []

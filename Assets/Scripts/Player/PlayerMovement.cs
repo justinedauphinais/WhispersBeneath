@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     private float groundCheckDelay = 0.3f;
     private float raycastDistance;
 
+    public bool allowMove = true;
+
     /// <summary>
     /// Initialize the parameters
     /// </summary>
@@ -45,6 +47,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (!allowMove) return;
+
         moveHorizontal = Input.GetAxisRaw("Horizontal");
         moveForward = Input.GetAxisRaw("Vertical");
 
@@ -73,6 +77,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
+        if (!allowMove) return;
         MovePlayer();
         ApplyJumpPhysics();
     }

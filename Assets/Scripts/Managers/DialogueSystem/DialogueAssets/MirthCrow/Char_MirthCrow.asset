@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d89a6724e975041bc86628271ed679, type: 3}
+  m_Name: Char_MirthCrow
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDialogue
+  meetingDialogue: {fileID: 11400000, guid: be9eecc9bd6d2994687556918ef8ae7e, type: 2}
+  level2event: {fileID: 11400000, guid: 85cad7364e57b7a4d88e4dc8082de78a, type: 2}
+  level1Idle:
+  - {fileID: 11400000, guid: c9e17a8877a32e44dbd11af334cb258c, type: 2}
+  - {fileID: 11400000, guid: c5644e8aaf4aef2459e6a0b9b7383c16, type: 2}
+  level2Idle:
+  - {fileID: 11400000, guid: b062449b5a379774488cb572576337fc, type: 2}
+  - {fileID: 11400000, guid: 456dcc04a5b518d4bbb217354fbdb20d, type: 2}
+  level3Idle: []
+  level4Idle: []
+  level5Idle: []
+  level6Idle: []
+  level7Idle: []
+  level8Idle: []
+  level9Idle: []
+  level10Idle: []

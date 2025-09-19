@@ -240,6 +240,7 @@ public class PlacementSystem : MonoBehaviour
         selectedObject = null;
         if (gridVisualization) gridVisualization.enabled = false;
         cellIndicator.SetActive(false);
+
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
         inputManager.OnUpdate -= OnUpdateNormalMesh;

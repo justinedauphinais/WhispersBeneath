@@ -15,6 +15,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] private InputManager inputManager;
     [SerializeField] private PlacementSystem placementSystem;
     [SerializeField] private TimeManager timeManager;
+    [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private GameObject player;
 
     [Header("Cameras")]
@@ -48,11 +49,16 @@ public class StateManager : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="state"></param>
-    private void SetState(GameState newState)
+    public void SetState(GameState newState)
     {
         switch (newState)
         {
             case GameState.Gameplay:
+                if (dialogueSystem.IsOpen())
+                {
+                    dialogueSystem.EndDialogue();
+                    return;
+                }
                 placementSystem.SetActive(false);
                 state = GameState.Gameplay;
                 player.SetActive(true);
@@ -67,6 +73,7 @@ public class StateManager : MonoBehaviour
                 buildingCamera.enabled = true;
                 playerCamera.enabled = false;
                 player.SetActive(false);
+                dialogueSystem.EndDialogue();
                 timeManager.PauseTime(true);
                 break;
 
@@ -76,6 +83,7 @@ public class StateManager : MonoBehaviour
                 player.SetActive(true);
                 playerCamera.enabled = true;
                 buildingCamera.enabled = false;
+                dialogueSystem.EndDialogue();
                 timeManager.PauseTime(true);
                 break;
 

@@ -19,21 +19,19 @@ public class TimeUI : MonoBehaviour
 
     private void OnEnable()
     {
-        TimeManager.OnMinuteChanged += UpdateTime;
-        TimeManager.OnHourChanged += UpdateTime;
+        TimeManager.OnDayChanged += UpdateTime;
         TimeManager.OnHourChanged += UpdatePicture;
     }
 
     private void OnDisable()
     {
-        TimeManager.OnMinuteChanged -= UpdateTime;
-        TimeManager.OnHourChanged -= UpdateTime;
+        TimeManager.OnDayChanged -= UpdateTime;
         TimeManager.OnHourChanged -= UpdatePicture;
     }
 
     private void UpdateTime()
     {
-        timeText.text = $"{TimeManager.Hour.ToString("00")}:{TimeManager.Minute.ToString("00")}";
+        //timeText.text = $"{WeekDay}:{TimeManager.Minute.ToString("00")}";
     }
 
     private void UpdatePicture()

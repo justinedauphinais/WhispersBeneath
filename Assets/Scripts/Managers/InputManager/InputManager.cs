@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PlayerInventoryHolder playerInventoryHolder;
     [SerializeField] private StaticInventoryDisplay hotbar;
     [SerializeField] private PlacementSystem placementSystem;
+    [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private Interactor player;
     [SerializeField] private ItemDatabase itemDatabase;
 
@@ -35,10 +36,21 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         // Player movement is in the file PlayerMovement.cs - It is only activated 
-
         switch (stateManager.State)
         {
             case StateManager.GameState.Gameplay:
+                if (pressStartTime != 0)
+                {
+                    float heldTime = Time.time - pressStartTime;
+
+                    if (heldTime >= holdThreshold)
+                    {
+                        pressStartTime = 0;
+                        if (player.ContextWheel())
+                            stateManager.ActivateDialogueMode();
+                    }
+                }
+
                 if (Keyboard.current.bKey.wasPressedThisFrame)
                 {
                     playerInventoryHolder.RequestInventory();
@@ -95,14 +107,13 @@ public class InputManager : MonoBehaviour
 
                 if (Keyboard.current.pKey.wasPressedThisFrame)
                 {
-                    InventoryItemData item = itemDatabase.GetItem(5);
-                    player.gameObject.GetComponent<PlayerInventoryHolder>().AddToInventory(item, 1);
+                    InventoryItemData inventoryItemData = itemDatabase.GetItem(5);
+                    playerInventoryHolder.AddToInventory(inventoryItemData, 1);
                 }
 
-                if (Keyboard.current.oKey.wasPressedThisFrame)
+                if (Keyboard.current.cKey.wasPressedThisFrame)
                 {
-                    InventoryItemData item = itemDatabase.GetItem(6);
-                    player.gameObject.GetComponent<PlayerInventoryHolder>().AddToInventory(item, 1);
+                    inventoryUIController.DisplayCalendar();
                 }
 
                 return;
@@ -134,6 +145,14 @@ public class InputManager : MonoBehaviour
                 }
                 return;
 
+            case StateManager.GameState.Dialogue:
+                if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    dialogueSystem.NextDialogue();
+                }
+
+                return;
+
             default:
                 return;
         }
@@ -149,12 +168,14 @@ public class InputManager : MonoBehaviour
             case StateManager.GameState.Gameplay:
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                player.gameObject.GetComponent<Player>().allowMove = true;
 
                 return;
 
             default:
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
+                player.gameObject.GetComponent<Player>().allowMove = false;
 
                 return;
         }

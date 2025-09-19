@@ -17,7 +17,10 @@ MonoBehaviour:
   Description: Flower
   Icon: {fileID: 0}
   MaxStackSize: 6
-  GoldValue: 5
+  GoldValue:
+    bronzeAmount: 5
+    silverAmount: 0
+    goldAmount: 0
   ItemPrefab: {fileID: 7153616121639759975, guid: bb576d22a0bb76a41b135291604260d3, type: 3}
   ItemDataType: 1
   MaxStackSizeOnDecorationSlot: 1

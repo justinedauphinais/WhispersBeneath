@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -132,5 +133,14 @@ public class StaticInventoryDisplay : InventoryDisplay
         {
             slot.UpdateUISlot();
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public InventorySlot GetSelectedItem()
+    {
+        return slots[selectedIndex].AssignedInventorySlot;
     }
 }

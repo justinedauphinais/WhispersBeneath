@@ -42,7 +42,7 @@ public class ContextPopup : MonoBehaviour
 
         foreach (DialogueChoice choice in choices)
         {
-            Destroy(choice);
+            Destroy(choice.gameObject);
         }
 
         this.gameObject.SetActive(false);

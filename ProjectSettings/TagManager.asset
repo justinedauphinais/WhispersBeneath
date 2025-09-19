@@ -11,6 +11,9 @@ TagManager:
   - StateManager
   - SecondCamera
   - ContextPopup
+  - ShopController
+  - NPC
+  - DialogueSystem
   layers:
   - Default
   - TransparentFX

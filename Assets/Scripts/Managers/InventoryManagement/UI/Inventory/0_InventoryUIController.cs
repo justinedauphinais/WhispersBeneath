@@ -20,6 +20,8 @@ public class InventoryUIController : MonoBehaviour
     [SerializeField] private FullBackpackInventory FullPlayerInventoryHolder;
     [SerializeField] private StaticInventoryDisplay StaticPlayerInventoryHolder;
     [SerializeField] private PlayerInventoryHolder PlayerInventoryHolder;
+    [SerializeField] private ShopUIController ShopUIController;
+    [SerializeField] private Calendar calendar;
 
     [Header("HUDs")]
     [SerializeField] private RectTransform Hotbar;
@@ -68,6 +70,8 @@ public class InventoryUIController : MonoBehaviour
 
         Hotbar.gameObject.SetActive(true);
         HUD.gameObject.SetActive(true);
+        calendar.ToggleActivation(false);
+        ShopUIController.UnshowShop();
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
@@ -112,6 +116,16 @@ public class InventoryUIController : MonoBehaviour
         {
             MiddleButton();
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void DisplayCalendar()
+    {
+        calendar.ToggleActivation(true);
+        Hotbar.gameObject.SetActive(false);
+        HUD.gameObject.SetActive(false);
     }
 
     /// <summary>

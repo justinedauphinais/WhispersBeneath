@@ -17,7 +17,10 @@ MonoBehaviour:
   Description: Candle
   Icon: {fileID: 0}
   MaxStackSize: 10
-  GoldValue: 5
+  GoldValue:
+    bronzeAmount: 0
+    silverAmount: 1
+    goldAmount: 0
   ItemPrefab: {fileID: 7088593316792080398, guid: c911cdc51da3fd64eac97b899ecd7b05, type: 3}
   ItemDataType: 1
   MaxStackSizeOnDecorationSlot: 3
