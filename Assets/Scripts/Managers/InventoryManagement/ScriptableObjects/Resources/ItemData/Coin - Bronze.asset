@@ -17,10 +17,7 @@ MonoBehaviour:
   Description: 1 bronze coin
   Icon: {fileID: 742521236, guid: 8d17828ba63a22b45924cc3c1f067d8f, type: 3}
   MaxStackSize: 99
-  GoldValue:
-    bronzeAmount: 1
-    silverAmount: 0
-    goldAmount: 0
+  Price: 1
   ItemPrefab: {fileID: 0}
   ItemDataType: 0
   coinType: 0

@@ -13,7 +13,7 @@ public class InventoryItemData : ScriptableObject
     [TextArea(4, 4)] public string Description;     /// Description of the item to display
     public Sprite Icon;                             /// Icon of the item to display
     public int MaxStackSize;                        /// Max stack of the item
-    public MoneyAmount GoldValue;                   /// Gold value of the item
+    public int Price;                               /// Bronze value of the item
 
     public GameObject ItemPrefab;                   /// GameObject to create when placing down / putting down
 

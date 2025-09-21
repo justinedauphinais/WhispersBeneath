@@ -73,7 +73,7 @@ public class ShopKeeper : NPCInteractive
         if (!IsMet)
         {
             DialogueSystem dialogueSystemMeeting = GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialogueSystem>();
-            DialogueAsset dialogueAssetMeeting = idleDialogues.GetMeetingDialogue();
+            DialogueAsset dialogueAssetMeeting = dialogues.GetMeetingDialogue();
 
             dialogueSystemMeeting.ShowDialogue(dialogueAssetMeeting, charName, relationship);
 
@@ -107,6 +107,6 @@ public class ShopKeeper : NPCInteractive
     private void ShowShop()
     {
         GameObject.FindGameObjectWithTag("ShopController").GetComponent<ShopUIController>().ShowShop(this);
-        GameObject.FindGameObjectWithTag("StateManager").GetComponent<StateManager>().SetState(StateManager.GameState.Inventory);
+        GameObject.FindGameObjectWithTag("StateManager").GetComponent<StateManager>().SetState(StateManager.GameState.Shopping);
     }
 }

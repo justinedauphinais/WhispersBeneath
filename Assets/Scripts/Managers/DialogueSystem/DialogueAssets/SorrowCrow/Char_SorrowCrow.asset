@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d89a6724e975041bc86628271ed679, type: 3}
   m_Name: Char_SorrowCrow
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDialogue
+  meetingDialogue: {fileID: 11400000, guid: 99cd0b58a812f8144837905588f0afb0, type: 2}
+  level2event: {fileID: 0}
   level1Idle:
   - {fileID: 11400000, guid: 95d331b61201cdd4180a49e3584deaf1, type: 2}
   - {fileID: 11400000, guid: 866f4500f0a97ad49a20d4fa8c909e6e, type: 2}

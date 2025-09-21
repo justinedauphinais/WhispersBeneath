@@ -8,7 +8,8 @@ public class StateManager : MonoBehaviour
         Inventory,
         Pause,
         Building,
-        Dialogue
+        Dialogue,
+        Shopping 
     }
 
     [Header("Managers")]
@@ -25,7 +26,7 @@ public class StateManager : MonoBehaviour
     // TEMPORARY
     [SerializeField] private ContextPopup contextPopup;
 
-    private GameState state;
+    public GameState state;
 
     public GameState State => state;
 
@@ -79,7 +80,17 @@ public class StateManager : MonoBehaviour
 
             case GameState.Inventory:
                 placementSystem.SetActive(false);
-                state = GameState.Inventory;
+                state = GameState.Shopping;
+                player.SetActive(true);
+                playerCamera.enabled = true;
+                buildingCamera.enabled = false;
+                dialogueSystem.EndDialogue();
+                timeManager.PauseTime(true);
+                break;
+
+            case GameState.Shopping:
+                placementSystem.SetActive(false);
+                state = GameState.Shopping;
                 player.SetActive(true);
                 playerCamera.enabled = true;
                 buildingCamera.enabled = false;
@@ -90,6 +101,15 @@ public class StateManager : MonoBehaviour
             case GameState.Dialogue:
                 placementSystem.SetActive(false);
                 state = GameState.Dialogue;
+                player.SetActive(true);
+                playerCamera.enabled = true;
+                buildingCamera.enabled = false;
+                timeManager.PauseTime(true);
+                break;
+
+            case GameState.Pause:
+                placementSystem.SetActive(false);
+                state = GameState.Pause;
                 player.SetActive(true);
                 playerCamera.enabled = true;
                 buildingCamera.enabled = false;

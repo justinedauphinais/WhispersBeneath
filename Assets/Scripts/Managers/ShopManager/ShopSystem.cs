@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class ShopSystem
@@ -57,6 +59,10 @@ public class ShopSystem
         freeSlot.AssignItem(data, amount);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private ShopSlot GetFreeSlot()
     {
         var freeSlot = _shopInventory.FirstOrDefault(i => i.ItemData == null);

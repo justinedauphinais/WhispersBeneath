@@ -151,6 +151,7 @@ public class TombLogic : MonoBehaviour, IInteractable
     /// </summary>
     public void CleanGrave()
     {
+        GameObject.FindWithTag("Player").GetComponent<QuestHolder>().OnGraveDigging?.Invoke();
         Maintenance = 100f;
         meshFilter.mesh = normalMesh;
     }

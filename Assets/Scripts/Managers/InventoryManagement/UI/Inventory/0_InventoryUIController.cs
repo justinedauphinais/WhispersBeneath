@@ -21,6 +21,7 @@ public class InventoryUIController : MonoBehaviour
     [SerializeField] private StaticInventoryDisplay StaticPlayerInventoryHolder;
     [SerializeField] private PlayerInventoryHolder PlayerInventoryHolder;
     [SerializeField] private ShopUIController ShopUIController;
+    [SerializeField] private JournalUIController journalUIController;
     [SerializeField] private Calendar calendar;
 
     [Header("HUDs")]
@@ -72,6 +73,7 @@ public class InventoryUIController : MonoBehaviour
         HUD.gameObject.SetActive(true);
         calendar.ToggleActivation(false);
         ShopUIController.UnshowShop();
+        journalUIController.HideSelf();
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;

@@ -137,12 +137,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopSlot_UI
   itemSprite: {fileID: 1058629324224314481}
+  moneySprite: {fileID: 3042606533890476651}
   itemCount: {fileID: 30220650100402082}
   price: {fileID: 468872698036660838}
   money: {fileID: 7978395259107173465}
   assignedInventorySlot:
     itemID: 0
     stackSize: 0
+  CanAffordSingle: 0
 --- !u!1 &3056610752857113527
 GameObject:
   m_ObjectHideFlags: 0

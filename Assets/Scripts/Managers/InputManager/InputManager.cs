@@ -6,16 +6,27 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private LayerMask placementMask;
-    [SerializeField] private Camera sceneCamera;
-    [SerializeField] private StateManager stateManager;
+    [Header("Managers")]
     [SerializeField] private InventoryUIController inventoryUIController;
-    [SerializeField] private PlayerInventoryHolder playerInventoryHolder;
-    [SerializeField] private StaticInventoryDisplay hotbar;
+    [SerializeField] private StateManager stateManager;
     [SerializeField] private PlacementSystem placementSystem;
     [SerializeField] private DialogueSystem dialogueSystem;
+    [SerializeField] private ShopUIController shopUIController;
+    [SerializeField] private JournalUIController journalUIController;
     [SerializeField] private Interactor player;
+
+    [Header("Inventory")]
+    [SerializeField] private PlayerInventoryHolder playerInventoryHolder;
+    [SerializeField] private StaticInventoryDisplay hotbar;
+
+    [Header("Others")]
+    [SerializeField] private LayerMask placementMask;
+    [SerializeField] private Camera sceneCamera;
+    [SerializeField] private float holdThreshold = 0.35f;
+
+    [Header("Debug")]
     [SerializeField] private ItemDatabase itemDatabase;
+    [SerializeField] public int DebugBuildItem = 4;
 
     private Vector3 lastPosition;
 
@@ -25,10 +36,7 @@ public class InputManager : MonoBehaviour
     public LayerMask PlacementMask => placementMask;
     public Vector3 LastPosition => lastPosition;
 
-    [SerializeField] public int DebugBuildItem = 4;
-
     private float pressStartTime;
-    [SerializeField] private float holdThreshold = 0.35f;
 
     /// <summary>
     /// 
@@ -116,6 +124,11 @@ public class InputManager : MonoBehaviour
                     inventoryUIController.DisplayCalendar();
                 }
 
+                if (Keyboard.current.jKey.wasPressedThisFrame)
+                {
+                    journalUIController.DisplaySelf();
+                }
+
                 return;
 
             case StateManager.GameState.Building:
@@ -145,12 +158,32 @@ public class InputManager : MonoBehaviour
                 }
                 return;
 
+            case StateManager.GameState.Shopping:
+                if (Keyboard.current.escapeKey.wasPressedThisFrame)
+                {
+                    inventoryUIController.CloseInventories();
+                    stateManager.ActivateGameplayMode();
+                }
+                else if (Mouse.current.rightButton.wasPressedThisFrame)
+                {
+                    shopUIController.RightClick();
+                } 
+                return;
+
             case StateManager.GameState.Dialogue:
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
                     dialogueSystem.NextDialogue();
                 }
 
+                return;
+
+            case StateManager.GameState.Pause:
+                if (Keyboard.current.escapeKey.wasPressedThisFrame)
+                {
+                    inventoryUIController.CloseInventories();
+                    stateManager.ActivateGameplayMode();
+                }
                 return;
 
             default:

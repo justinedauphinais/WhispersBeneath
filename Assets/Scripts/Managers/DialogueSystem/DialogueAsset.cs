@@ -18,4 +18,5 @@ public class Dialogue
     public int relationshipAffectation;
     public int nextDialogue;
     public Dialogue[] options;
+    public Quest triggerQuest;
 }

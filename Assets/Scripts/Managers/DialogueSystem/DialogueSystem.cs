@@ -61,10 +61,11 @@ public class DialogueSystem : MonoBehaviour
         if (dialogueIndex >= dialogueAsset.dialogues.Length)
         {
             EndDialogue();
+            stateManager.SetState(StateManager.GameState.Gameplay);
             return;
         }
 
-        // CREATE CHOICES
+        // Create choices
         if (dialogueAsset.dialogues[dialogueIndex].options.Length != 0)
         {
             MakingChoice = true;
@@ -84,6 +85,12 @@ public class DialogueSystem : MonoBehaviour
         {
             dialogueText.text = dialogueAsset.dialogues[dialogueIndex].dialogue;
             nameText.text = this.name;
+        }
+
+        // Trigger missions
+        if (dialogueAsset.dialogues[dialogueIndex].triggerQuest != null)
+        {
+            GameObject.FindWithTag("Player").GetComponent<QuestHolder>().AddQuest(dialogueAsset.dialogues[dialogueIndex].triggerQuest, speaker.gameObject.GetComponent<NPCInteractive>());
         }
     }
 
@@ -120,8 +127,6 @@ public class DialogueSystem : MonoBehaviour
         dialogueText.text = "";
 
         dialogueAsset = null;
-
-        stateManager.SetState(StateManager.GameState.Gameplay);
     }
 
     /// <summary>

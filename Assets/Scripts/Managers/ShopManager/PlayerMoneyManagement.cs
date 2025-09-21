@@ -8,8 +8,15 @@ public class PlayerMoneyManagement : MonoBehaviour
 
     public Action<MoneyAmount> GoldAmountChanged;
 
+    public MoneyAmount MoneyAmount => moneyAmount;
+
     public void Start()
     {
         GoldAmountChanged?.Invoke(moneyAmount);
+    }
+
+    public void AddMoney(MoneyAmount moneyAmount)
+    {
+        this.moneyAmount += moneyAmount;
     }
 }

@@ -6,6 +6,7 @@ public class ShopSlot_UI : MonoBehaviour
 {
     [Header("Image & Count")]
     [SerializeField] protected Image itemSprite;
+    [SerializeField] protected Image moneySprite;
     [SerializeField] protected TextMeshProUGUI itemCount;
     [SerializeField] protected TextMeshProUGUI price;
     [SerializeField] protected Transform money;
@@ -17,6 +18,8 @@ public class ShopSlot_UI : MonoBehaviour
 
     public ShopSlot AssignedInventorySlot => assignedInventorySlot;
     public InventoryDisplay ParentDisplay { get; protected set; }
+
+    public bool CanAffordSingle;
 
     /// <summary>
     /// Default values.
@@ -58,7 +61,9 @@ public class ShopSlot_UI : MonoBehaviour
             else itemCount.text = "";
 
             money.gameObject.SetActive(true);
-            price.text = slot.ItemData.GoldValue.ToString();
+            price.text = slot.ItemData.Price.ToString("00");
+
+            assignedInventorySlot = slot;
 
             //AssignedInventorySlot.OnInventorySlotChanged?.Invoke(AssignedInventorySlot);
         }
@@ -113,5 +118,27 @@ public class ShopSlot_UI : MonoBehaviour
     public void SetSprite(Sprite sprite)
     {
         this.GetComponent<Image>().sprite = sprite;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="can"></param>
+    public void CanAfford(bool can)
+    {
+        switch (can)
+        {
+            case true:
+                price.color = Color.white;
+                moneySprite.color = new Color(1f, 1f, 1f, 1f);
+                CanAffordSingle = true;
+                break;
+
+            case false:
+                price.color = new Color(0.9f, 0.9f, 0.9f, 0.5f);
+                moneySprite.color = new Color(1f, 1f, 1f, 0.5f);
+                CanAffordSingle = false;
+                break;
+        }
     }
 }

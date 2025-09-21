@@ -1,15 +1,19 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class NPCInteractive : MonoBehaviour, IInteractable
 {
     [SerializeField] public string charName;
-    [SerializeField] public CharacterDialogue idleDialogues;
+    [SerializeField] public CharacterDialogue dialogues;
+    [SerializeField] public Sprite characterImage;
 
     protected NPCRelationship relationship;
 
     protected bool IsMet;
+
+    public NPCRelationship Relationsip => relationship;
 
     /// <summary>
     /// 
@@ -72,9 +76,9 @@ public class NPCInteractive : MonoBehaviour, IInteractable
 
         DialogueAsset dialogueAsset = null;
         if (TriggerEvent)
-            dialogueAsset = idleDialogues.GetEvent(level);
+            dialogueAsset = dialogues.GetEvent(level);
         else
-            dialogueAsset = idleDialogues.GetRandomPerLevel(level);
+            dialogueAsset = dialogues.GetRandomPerLevel(level);
 
         dialogueSystem.ShowDialogue(dialogueAsset, charName, relationship);
     }
@@ -97,7 +101,7 @@ public class NPCInteractive : MonoBehaviour, IInteractable
         if (!IsMet)
         {
             DialogueSystem dialogueSystemMeeting = GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialogueSystem>();
-            DialogueAsset dialogueAssetMeeting = idleDialogues.GetMeetingDialogue();
+            DialogueAsset dialogueAssetMeeting = dialogues.GetMeetingDialogue();
 
             dialogueSystemMeeting.ShowDialogue(dialogueAssetMeeting, charName, relationship);
 
